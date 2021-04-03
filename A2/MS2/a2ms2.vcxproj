@@ -139,6 +139,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="a2ms2.c" />
+    <ClCompile Include="account.c" />
+    <ClCompile Include="accountTicketingUI.c" />
+    <ClCompile Include="commonHelpers.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="account.h" />
+    <ClInclude Include="accountTicketingUI.h" />
+    <ClInclude Include="commonHelpers.h" />
+    <ClInclude Include="ticket.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

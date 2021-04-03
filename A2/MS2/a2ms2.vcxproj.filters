@@ -18,5 +18,28 @@
     <ClCompile Include="a2ms2.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="account.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="accountTicketingUI.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commonHelpers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="account.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="accountTicketingUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="commonHelpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ticket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
