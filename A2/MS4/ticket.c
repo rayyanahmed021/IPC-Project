@@ -92,7 +92,7 @@ void getMessage(struct Ticket tickets[], char accountName[], char accountType)
 void updateTicketStatus(struct Ticket tickets[], int accountNum, int arraySize,
 	int option, char agentName[], char accountType)
 {
-	int i;
+	int i, count = 0;
 	char character;
 
 	//removal of tickets related to a removed account
@@ -100,7 +100,12 @@ void updateTicketStatus(struct Ticket tickets[], int accountNum, int arraySize,
 	{
 		for (i = 0; i < arraySize; i++)
 		{
-			if (tickets[i].accountNum == accountNum && tickets[i].status == 1)
+			if (tickets[i].accountNum == accountNum && tickets[i].status == 0)
+			{
+				writeArchiveTickets(&tickets[i], 1);
+				count++;
+			}
+			else if (tickets[i].accountNum == accountNum && tickets[i].status == 1)
 			{
 				tickets[i].TicketNum = 0;
 			}
@@ -177,5 +182,187 @@ void updateTicketStatus(struct Ticket tickets[], int accountNum, int arraySize,
 
 int loadTickets(struct Ticket tickets[], int arraySize)
 {
-	return 1;
+	int i, count = 0, fieldCount = 0;
+
+	FILE* fp = fopen(TICKET_FILE, "r");
+
+	if (fp != NULL)
+	{
+		//for loop
+		do
+		{
+			fieldCount = fscanf(fp, "%d|%d|%d|%30[^|]|%d",
+				&tickets[count].TicketNum,
+				&tickets[count].accountNum,
+				&tickets[count].status,
+				tickets[count].subject,
+				&tickets[count].messageCount);
+			/*printf("\n%d | %d | %d | %s | %d\n",
+				tickets[count].TicketNum,
+				tickets[count].accountNum,
+				tickets[count].status,
+				tickets[count].subject,
+				tickets[count].messageCount);*/
+
+			if (fieldCount == 5 && tickets[count].messageCount > 0)
+			{
+				for (i = 0; i < tickets[count].messageCount; i++)
+				{
+					fieldCount = fscanf(fp, "|%c|%30[^|]|%150[^|]",
+						&tickets[count].message[i].accountType,
+						tickets[count].message[i].displayName,
+						tickets[count].message[i].messageDisplay);
+					/*printf("|%c|%s|%s",
+						tickets[count].message[i].accountType,
+						tickets[count].message[i].displayName,
+						tickets[count].message[i].messageDisplay);*/
+				}
+			}
+			fgetc(fp); //remove newline
+			count++;
+		} while (feof(fp) == 0 && count < arraySize);
+
+		fflush(fp);
+		fclose(fp);
+		fp = NULL;
+
+	}
+
+	return count;
 }
+
+
+int updateCustomerFile(struct Ticket tickets[], int arraySize)
+{
+	int i, j, count = 0;
+
+	FILE* fp = fopen(TICKET_FILE, "w");
+
+	if (fp != NULL)
+	{
+		for (i = 0; i < arraySize; i++)
+		{
+			if (tickets[i].TicketNum > 0)
+			{
+
+				fprintf(fp, "%d|%d|%s|%d",
+					tickets[i].accountNum,
+					tickets[i].status,
+					tickets[i].subject,
+					tickets[i].messageCount);
+
+				//loop for messages
+				for (j = 0; j < tickets[i].messageCount; j++)
+				{
+					fprintf(fp, "|%c|%s|%s|",
+						tickets[i].message[j].accountType,
+						tickets[i].message[j].displayName,
+						tickets[i].message[j].messageDisplay);
+				}
+				fputc('\n', fp);//remove newline
+				count++;
+			}
+		}
+		fflush(fp);
+		fclose(fp);
+		fp = NULL;
+	}
+	return count;
+}
+
+
+int writeArchiveTickets(struct Ticket tickets[], int arraySize)
+{
+	int i, j, count = 0;
+
+	FILE* fp = fopen(TICKET_ARCHIVE_FILE, "a");
+
+	if (fp != NULL)
+	{
+		for (i = 0; i < arraySize; i++)
+		{
+			if (tickets[i].status == 0 && tickets[i].TicketNum > 0)
+			{
+
+				fprintf(fp, "%d|%d|%d|%s|%d",
+					tickets[i].TicketNum,
+					tickets[i].accountNum,
+					tickets[i].status,
+					tickets[i].subject,
+					tickets[i].messageCount);
+
+				//loop for messages
+				for (j = 0; j < tickets[i].messageCount; j++)
+				{
+					fprintf(fp, "|%c|%s|%s",
+						tickets[i].message[j].accountType,
+						tickets[i].message[j].displayName,
+						tickets[i].message[j].messageDisplay);
+				}
+
+				tickets[i].TicketNum = 0;
+				fputc('\n', fp);
+
+				count++;
+			}
+
+		}
+		fflush(fp);
+		fclose(fp);
+		fp = NULL;
+	}
+	return count;
+}
+
+int readArchiveTickets(void)
+{
+	int ticketCount = 0, msgCount = 0, i;
+	struct Ticket tmp = { 0 };
+
+	FILE* fp = fopen(ARCHIVE_ACC_FILE, "r");
+
+	if (fp != NULL)
+	{
+		
+		do
+		{
+			ticketCount += fscanf(fp, "%d|%d|%d|%30[^|]|%d",
+				&tmp.TicketNum,
+				&tmp.accountNum,
+				&tickets.status,
+				tickets.subject,
+				&tickets.messageCount);
+			/*printf("\n%d | %d | %d | %s | %d\n",
+				tickets[count].TicketNum,
+				tickets[count].accountNum,
+				tickets[count].status,
+				tickets[count].subject,
+				tickets[count].messageCount);*/
+
+			if (tmp.messageCount > 0)
+			{
+				for (i = 0; i < tmp.messageCount; i++)
+				{
+					msgCount += fscanf(fp, "|%c|%30[^|]|%150[^|]",
+						&tmp.message[i].accountType,
+						tmp.message[i].displayName,
+						tmp.message[i].messageDisplay);
+					/*printf("|%c|%s|%s",
+						tickets[count].message[i].accountType,
+						tickets[count].message[i].displayName,
+						tickets[count].message[i].messageDisplay);*/
+				}
+			}
+			fgetc(fp); //remove newline
+
+		} while (!feof(fp));
+
+		fflush(fp);
+		fclose(fp);
+		fp = NULL;
+
+	}
+	return ticketCount;
+}
+
+

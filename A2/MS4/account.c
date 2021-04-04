@@ -57,7 +57,6 @@ void getUserLogin(struct UserLogin* user_login)
 	puts("User Login Data Input");
 	puts("----------------------------------------");
 
-	//getLoginName(user_login->loginName);
 	getNoSpaceString(user_login->loginName, "user login", MIN_SIZE, MAX_LOGIN);
 
 	printf("Enter the display name (%d chars max): ", MAX_COUNTRY);
@@ -96,7 +95,7 @@ void getPassword(char password[])
 			}
 			else if (strchr("!@#$%^&*", password[i]))
 			{
-				symbol++;				
+				symbol++;
 			}
 			else
 			{
@@ -127,7 +126,7 @@ void getDemographic(struct Demographic* demo)
 	printf("Enter the household Income: $");
 	demo->income = getPositiveDouble();
 
-	capitalizeString(demo->country, "the country" , MIN_SIZE, MAX_COUNTRY);
+	capitalizeString(demo->country, "the country", MIN_SIZE, MAX_COUNTRY);
 	putchar('\n');
 }
 
@@ -251,21 +250,78 @@ int loadAccounts(struct Account accounts[], int arraySize)
 {
 	int i;
 
-	FILE* fp = fopen("accounts.txt","r");
+	FILE* fp = fopen(ACCOUNT_FILE, "r");
 
 	if (fp != NULL)
 	{
 		//for loop
 		for (i = 0; i < arraySize; i++)
 		{
-			fscanf(fp, "%d~%c~%s~%s~%s~%d~%lf~%s", &i);
-
+			fscanf(fp, "%d~%c~%30[^~]~%10[^~]~%8[^~]~%d~%lf~%30[^\n]",
+				&accounts[i].accountNumber,
+				&accounts[i].accountType,
+				accounts[i].login.accountName,
+				accounts[i].login.loginName,
+				accounts[i].login.password,
+				&accounts[i].demographic.birth_year,
+				&accounts[i].demographic.income,
+				accounts[i].demographic.country);
 		}
-		//asda 
-		//printf("\n%d\n", i);
 		fflush(fp);
 		fclose(fp);
 		fp = NULL;
 	}
-	return 1;
+	return arraySize;
 }
+
+void writeRemovedAccounts(struct Account accounts[])
+{
+	FILE* fp = fopen(ARCHIVE_ACC_FILE, "a");
+	if (fp != NULL)
+	{
+		//fprintf(fp, "%d~%c~%30[^~]~%10[^~]~%8[^~]~%d~%lf~%30[^\n]",
+		fprintf(fp, "%d~%c~%s~%s~%s~%d~%lf~%s\n",
+			accounts->accountNumber,
+			accounts->accountType,
+			accounts->login.accountName,
+			accounts->login.loginName,
+			accounts->login.password,
+			accounts->demographic.birth_year,
+			accounts->demographic.income,
+			accounts->demographic.country);
+		accounts->accountNumber = 0;
+		fflush(fp);
+		fclose(fp);
+		fp = NULL;
+	}
+}
+
+int readArchiveAccount(void)
+{
+	int count = 0;
+	struct Account tmp = { 0 };
+
+	FILE* fp = fopen(ARCHIVE_ACC_FILE, "r");
+
+	if (fp != NULL)
+	{
+		while (fscanf(fp, "%d~%c~%30[^~]~%10[^~]~%8[^~]~%d~%lf~%30[^\n]",
+			&tmp.accountNumber,
+			&tmp.accountType,
+			tmp.login.accountName,
+			tmp.login.loginName,
+			tmp.login.password,
+			&tmp.demographic.birth_year,
+			&tmp.demographic.income,
+			tmp.demographic.country) == 8)
+		{
+			count++;
+		}
+		fflush(fp);
+		fclose(fp);
+		fp = NULL;
+
+	}
+	return count;
+}
+

@@ -152,7 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="accounts.txt" />
+    <Text Include="accounts_arc.txt" />
     <Text Include="tickets.txt" />
+    <Text Include="tickets_arc.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

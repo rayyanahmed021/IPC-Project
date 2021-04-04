@@ -16,6 +16,8 @@
 #define MAX_SUBJECT 30
 #define MAX_MESSAGE_CHAR 150
 #define MAX_MESSAGE 20
+#define TICKET_FILE "tickets.txt"
+#define TICKET_ARCHIVE_FILE "tickets_arc.txt"
 
 struct Message
 {
@@ -50,4 +52,9 @@ void getMessage(struct Ticket tickets[], char accountName[], char accountType);
 void updateTicketStatus(struct Ticket tickets[], int accountNum, int arraySize, int option,  char agentName[], char accountType);
 
 int loadTickets(struct Ticket tickets[], int arraySize);
+
+int updateCustomerFile(struct Ticket tickets[], int arraySize);
+
+int writeArchiveTickets(struct Ticket tickets[], int arraySize);
+
 #endif // !TICKET_H_

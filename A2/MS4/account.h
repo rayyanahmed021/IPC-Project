@@ -14,7 +14,8 @@
 #define MAX_PASSWORD 8
 #define MAX_LOGIN 10
 #define MIN_SIZE 2
-
+#define ACCOUNT_FILE "accounts.txt"
+#define ARCHIVE_ACC_FILE "accounts_arc.txt"
 
 struct Demographic
 {
@@ -69,6 +70,10 @@ void updateUserLogin(struct UserLogin* login);
 void updateDemographic(struct Demographic* demo);
 
 int loadAccounts(struct Account accounts[], int arraySize);
+
+void writeRemovedAccounts(struct Account accounts[]);
+
+int readArchiveAccount(void);
 
 #endif // !ACCOUNT_H_
 

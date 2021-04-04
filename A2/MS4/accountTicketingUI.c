@@ -375,12 +375,14 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		puts(" 8) List closed tickets");
 		puts(" 9) Manage a ticket");
 		puts("10) Archive closed tickets");
+		puts("11) View archived account statistics");
+		puts("12) View archived tickets statistics");
 		puts("----------------------------------------------");
 		puts("0) Logout\n");
 		printf("Selection: ");
 
 		//input
-		selection = getIntFromRange(0, 10);
+		selection = getIntFromRange(0, 12);
 
 		//conditions
 		switch (selection)
@@ -401,7 +403,7 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 			if (matchIndex != -1)
 			{
 				accountTicket->accounts[matchIndex].accountNumber = newAccountNum(accountTicket->accounts,
-																				accountTicket->ACCOUNT_MAX_SIZE);
+					accountTicket->ACCOUNT_MAX_SIZE);
 				getAccount(&accountTicket->accounts[matchIndex]);
 				getUserLogin(&accountTicket->accounts[matchIndex].login);
 				getDemographic(&accountTicket->accounts[matchIndex].demographic);
@@ -462,12 +464,13 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 				//condition for removing
 				if (exitOption == 'y' || exitOption == 'Y')
 				{
-					updateTicketStatus( accountTicket->tickets,
-										accountTicket->accounts[matchIndex].accountNumber,
-										accountTicket->TICKET_MAX_SIZE,0,
-										name,'A');
+					updateTicketStatus(accountTicket->tickets,
+						accountTicket->accounts[matchIndex].accountNumber,
+						accountTicket->TICKET_MAX_SIZE, 0,
+						name, 'A');
 
-					accountTicket->accounts[matchIndex].accountNumber = 0;
+					writeRemovedAccounts(&accountTicket->accounts[matchIndex]);
+
 					puts("*** Account Removed! ***");
 
 				}
@@ -488,7 +491,7 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		{
 			putchar('\n');
 			displayAllAccountSummaryRecords(accountTicket->accounts,
-											accountTicket->ACCOUNT_MAX_SIZE);
+				accountTicket->ACCOUNT_MAX_SIZE);
 			putchar('\n');
 			pauseExecution();
 		}
@@ -497,7 +500,7 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		{
 			putchar('\n');
 			displayAllAccountDisplayRecords(accountTicket->accounts,
-											accountTicket->ACCOUNT_MAX_SIZE);
+				accountTicket->ACCOUNT_MAX_SIZE);
 			putchar('\n');
 			pauseExecution();
 		}
@@ -524,13 +527,13 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		{
 			putchar('\n');
 			matchIndex = findTicketIndexByTickNum(0, "ticket number",
-												  accountTicket->tickets,
-												  accountTicket->TICKET_MAX_SIZE, 1);
+				accountTicket->tickets,
+				accountTicket->TICKET_MAX_SIZE, 1);
 
 			if (matchIndex != -1)
 			{
 				menuUpdateTcktAgent(&accountTicket->tickets[matchIndex], name,
-									accountTicket->TICKET_MAX_SIZE);
+					accountTicket->TICKET_MAX_SIZE);
 			}
 			else
 			{
@@ -541,8 +544,25 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		case 10:
 		{
 			putchar('\n');
-			printf("Feature #%d currently unavailable!\n\n", selection);
+			printf("Are you sure? This action cannot be reversed. ([Y]es|[N]o): ");
+			exitOption = getCharOption("yYnN");
+			putchar('\n');
+			if (exitOption == 'y' || exitOption == 'Y')
+			{
+				printf("*** %d tickets archived ***\n\n", writeArchiveTickets(accountTicket->tickets, accountTicket->TICKET_MAX_SIZE));
+			}
 			pauseExecution();
+		}
+		break;
+		case 11:
+		{
+			putchar('\n');
+			printf("There are %d account(s) currently archived.\n\n", readArchiveAccount());
+		}
+		break;
+		case 12:
+		{
+
 		}
 		break;
 		}
@@ -625,8 +645,12 @@ void menuCustomer(struct Account* account, struct Ticket* tickets, int ticketArr
 		switch (selection)
 		{
 		case 0:
+		{
+			puts("Saving session modifications...");
+			printf("   %d tickets saved.", updateCustomerFile(tickets, ticketArraySize));
 			puts("### LOGGED OUT ###\n");
-			break;
+		}
+		break;
 		case 1:
 		{
 			displayAccountDetailHeader();
