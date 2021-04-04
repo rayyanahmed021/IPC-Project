@@ -53,8 +53,11 @@ void updateTicketStatus(struct Ticket tickets[], int accountNum, int arraySize, 
 
 int loadTickets(struct Ticket tickets[], int arraySize);
 
-int updateCustomerFile(struct Ticket tickets[], int arraySize);
+int updateTicketFile(struct Ticket tickets[], int arraySize);
 
 int writeArchiveTickets(struct Ticket tickets[], int arraySize);
+
+int readArchiveTickets(void);
+
 
 #endif // !TICKET_H_

@@ -47,8 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="accounts.txt" />
-    <Text Include="tickets.txt" />
     <Text Include="tickets_arc.txt" />
     <Text Include="accounts_arc.txt" />
+    <Text Include="tickets.txt" />
   </ItemGroup>
 </Project>

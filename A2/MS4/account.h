@@ -75,6 +75,8 @@ void writeRemovedAccounts(struct Account accounts[]);
 
 int readArchiveAccount(void);
 
+int updateAccountFile(struct Account accounts[], int arraySize);
+
 #endif // !ACCOUNT_H_
 
 

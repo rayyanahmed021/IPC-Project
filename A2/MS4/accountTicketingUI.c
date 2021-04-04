@@ -375,6 +375,7 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		puts(" 8) List closed tickets");
 		puts(" 9) Manage a ticket");
 		puts("10) Archive closed tickets");
+		puts("----------------------------------------------");
 		puts("11) View archived account statistics");
 		puts("12) View archived tickets statistics");
 		puts("----------------------------------------------");
@@ -390,6 +391,11 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		case 0:
 		{
 			putchar('\n');
+			puts("Saving session modifications...");
+			printf("   %d account saved.\n", 
+				updateAccountFile(accountTicket->accounts, accountTicket->ACCOUNT_MAX_SIZE));
+			printf("   %d tickets saved.\n", 
+				updateTicketFile(accountTicket->tickets, accountTicket->TICKET_MAX_SIZE));			
 			puts("### LOGGED OUT ###\n");
 		}
 		break;
@@ -558,11 +564,14 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		{
 			putchar('\n');
 			printf("There are %d account(s) currently archived.\n\n", readArchiveAccount());
+			pauseExecution();
 		}
 		break;
 		case 12:
 		{
-
+			putchar('\n');
+			readArchiveTickets();
+			pauseExecution();
 		}
 		break;
 		}
@@ -647,7 +656,7 @@ void menuCustomer(struct Account* account, struct Ticket* tickets, int ticketArr
 		case 0:
 		{
 			puts("Saving session modifications...");
-			printf("   %d tickets saved.", updateCustomerFile(tickets, ticketArraySize));
+			printf("   %d tickets saved.\n", updateTicketFile(tickets, ticketArraySize));
 			puts("### LOGGED OUT ###\n");
 		}
 		break;

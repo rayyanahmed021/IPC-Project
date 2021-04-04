@@ -101,9 +101,8 @@ void getPassword(char password[])
 			{
 				flag = 1;
 			}
-			if (digit > 2 || upper > 2 || lower > 2 || symbol > 2)
+			if (digit > 2 || upper > 2 || lower > 2 || symbol > 2 || flag)
 			{
-				flag = 1;
 				puts("SECURITY: Password must contain 2 of each:");
 				puts("          Digit: 0-9");
 				puts("          UPPERCASE character");
@@ -321,6 +320,40 @@ int readArchiveAccount(void)
 		fclose(fp);
 		fp = NULL;
 
+	}
+	return count;
+}
+
+int updateAccountFile(struct Account accounts[], int arraySize)
+{
+	int i, count = 0;
+
+	FILE* fp = fopen(TICKET_FILE, "w");
+
+	if (fp != NULL)
+	{
+		for (i = 0; i < arraySize; i++)
+		{
+			if (accounts[i].accountNumber > 0)
+			{
+
+				fprintf(fp, "%d~%c~%s~%s~%s~%d~%.2lf~%s\n",
+					accounts[i].accountNumber,
+					accounts[i].accountType,
+					accounts[i].login.accountName,
+					accounts[i].login.loginName,
+					accounts[i].login.password,
+					accounts[i].demographic.birth_year,
+					accounts[i].demographic.income,
+					accounts[i].demographic.country);
+
+				fputc('\n', fp);//remove newline
+				count++;
+			}
+		}
+		fflush(fp);
+		fclose(fp);
+		fp = NULL;
 	}
 	return count;
 }
