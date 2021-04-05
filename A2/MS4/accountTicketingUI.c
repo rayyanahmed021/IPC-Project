@@ -392,10 +392,10 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		{
 			putchar('\n');
 			puts("Saving session modifications...");
-			printf("   %d account saved.\n", 
+			printf("   %d account saved.\n",
 				updateAccountFile(accountTicket->accounts, accountTicket->ACCOUNT_MAX_SIZE));
-			printf("   %d tickets saved.\n", 
-				updateTicketFile(accountTicket->tickets, accountTicket->TICKET_MAX_SIZE));			
+			printf("   %d tickets saved.\n",
+				updateTicketFile(accountTicket->tickets, accountTicket->TICKET_MAX_SIZE));
 			puts("### LOGGED OUT ###\n");
 		}
 		break;
@@ -792,15 +792,11 @@ void menuCustomerUpdateTckt(struct Ticket tickets[], char accountName[])
 		}
 		break;
 		case 2:
-		{
 			getMessage(tickets, accountName, 'C');
-		}
-		break;
+			break;
 		case 3:
-		{
 			updateTicketStatus(tickets, 0, 0, 2, accountName, 'C');
-		}
-		break;
+			break;
 		default:
 			break;
 		}

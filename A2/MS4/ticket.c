@@ -61,8 +61,6 @@ void getNewTicket(struct Ticket tickets[], int accountNum, char displayName[])
 	tickets->status = 1;
 }
 
-
-
 //take input of message and update the details
 void getMessage(struct Ticket tickets[], char accountName[], char accountType)
 {
