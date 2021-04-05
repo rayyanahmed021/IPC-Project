@@ -282,10 +282,11 @@ int writeArchiveTickets(struct Ticket tickets[], int arraySize)
 	{
 		for (i = 0; i < arraySize; i++)
 		{
+			//closed and valid tickets
 			if (tickets[i].status == 0 && tickets[i].TicketNum > 0)
 			{
 
-				fprintf(fp, "%d|%d|%d|%s|%d",
+				fprintf(fp, "%d|%d|%d|%s|%d|",
 					tickets[i].TicketNum,
 					tickets[i].accountNum,
 					tickets[i].status,
@@ -295,18 +296,16 @@ int writeArchiveTickets(struct Ticket tickets[], int arraySize)
 				//loop for messages
 				for (j = 0; j < tickets[i].messageCount; j++)
 				{
-					fprintf(fp, "|%c|%s|%s",
+					fprintf(fp, "%c|%s|%s|",
 						tickets[i].message[j].accountType,
 						tickets[i].message[j].displayName,
 						tickets[i].message[j].messageDisplay);
 				}
-
+				//ticket to safe empty state
 				tickets[i].TicketNum = 0;
-				fputc('\n', fp);
-
+				fputc('\n', fp); //add a newline
 				count++;
 			}
-
 		}
 		fflush(fp);
 		fclose(fp);
@@ -320,6 +319,7 @@ int readArchiveTickets(void)
 	int ticketCount = 0, msgCount = 0, i, count = 0;
 	struct Ticket tmp = { 0 };
 
+	//open a ticket
 	FILE* fp = fopen(TICKET_ARCHIVE_FILE, "r");
 
 	if (fp != NULL)
@@ -327,6 +327,7 @@ int readArchiveTickets(void)
 
 		do
 		{
+			//read tickets main info
 			count = fscanf(fp, "%d|%d|%d|%30[^|]|%d|",
 				&tmp.TicketNum,
 				&tmp.accountNum,
@@ -334,43 +335,35 @@ int readArchiveTickets(void)
 				tmp.subject,
 				&tmp.messageCount);
 
+			//count tickets and messages
 			if (count == 5)
 			{
 				ticketCount++;
+				msgCount += tmp.messageCount;
 			}
-			printf("\n%d | %d | %d | %s | %d\n",
-				tmp.TicketNum,
-				tmp.accountNum,
-				tmp.status,
-				tmp.subject,
-				tmp.messageCount);
 
+			//read messages when they are present
 			if (tmp.messageCount > 0)
 			{
-				msgCount += tmp.messageCount;
-
 				for (i = 0; i < tmp.messageCount; i++)
 				{
 					fscanf(fp, "%c|%30[^|]|%150[^|]|",
 						&tmp.message[i].accountType,
 						tmp.message[i].displayName,
 						tmp.message[i].messageDisplay);
-					/*printf("|%c|%s|%s",
-						tickets[count].message[i].accountType,
-						tickets[count].message[i].displayName,
-						tickets[count].message[i].messageDisplay);*/
 				}
 			}
 			fgetc(fp); //remove newline
 
-		} while (!feof(fp));
+		} while (!feof(fp)); //end of file
 
 		fflush(fp);
 		fclose(fp);
 		fp = NULL;
-
 	}
-	printf("There are %d ticket(s) and a total of %d message(s) archived.\n\n",ticketCount,msgCount);
+	//display tickets and message
+	printf("There are %d ticket(s) and a total of %d message(s) archived.\n\n", ticketCount, msgCount);
+
 	return ticketCount;
 }
 

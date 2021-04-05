@@ -101,13 +101,14 @@ void getPassword(char password[])
 			{
 				flag = 1;
 			}
-			if (digit > 2 || upper > 2 || lower > 2 || symbol > 2 || flag)
+			if (digit > 2 || upper > 2 || lower > 2 || symbol > 2 || flag == 1)
 			{
 				puts("SECURITY: Password must contain 2 of each:");
 				puts("          Digit: 0-9");
 				puts("          UPPERCASE character");
 				puts("          lowercase character");
 				puts("          symbol character: !@#$%^&*");
+				flag = 1;
 			}
 		}
 	} while (flag);
@@ -157,7 +158,6 @@ void updateAccount(struct Account* account)
 		{
 			printf("Enter the account type (A=Agent | C=Customer): ");
 			account->accountType = getCharOption("AC");
-			putchar('\n');
 		}
 		break;
 		case 2:
