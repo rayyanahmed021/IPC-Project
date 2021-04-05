@@ -86,50 +86,35 @@ void getMessage(struct Ticket tickets[], char accountName[], char accountType)
 	}
 }
 
-//accountNum,
-// array suize
-// 
+//all closed tickets for a removed account is archived while the active tickets are reset to safe empty state
 void removeTickets(struct Ticket tickets[], int arraySize, int accountNum)
 {
 	int i;
 
+	//looping over account array
 	for (i = 0; i < arraySize; i++)
 	{
+		//matching account number and closed ticket
 		if (tickets[i].accountNum == accountNum && tickets[i].status == 0)
 		{
 			writeArchiveTickets(&tickets[i], 1);
 		}
+		//matching account number and open ticket
 		else if (tickets[i].accountNum == accountNum && tickets[i].status == 1)
 		{
 			tickets[i].TicketNum = 0;
 		}
 	}
 }
+
 //close or reopen tickets 
-void updateTicketStatus(struct Ticket tickets[],int option, char agentName[], char accountType)
+void updateTicketStatus(struct Ticket tickets[], int option, char agentName[], char accountType)
 {
 	char character;
 
-	//removal of tickets related to a removed account
-	/*if (option == 0)
-	{
-		for (i = 0; i < arraySize; i++)
-		{
-			if (tickets[i].accountNum == accountNum && tickets[i].status == 0)
-			{
-				writeArchiveTickets(&tickets[i], 1);
-				count++;
-			}
-			else if (tickets[i].accountNum == accountNum && tickets[i].status == 1)
-			{
-				tickets[i].TicketNum = 0;
-			}
-		}
-	}*/
 	//close a ticket
 	if (option == 2)
 	{
-
 		if (tickets->status == 0)
 		{
 			puts("ERROR: Ticket is already closed!\n");
@@ -147,7 +132,7 @@ void updateTicketStatus(struct Ticket tickets[],int option, char agentName[], ch
 				//update the details
 				tickets->status = 0;
 
-				//input
+				//space for message
 				if (tickets->messageCount < MAX_MESSAGE)
 				{
 					printf("Do you want to leave a closing message? ([Y]es|[N]o): ");
@@ -157,14 +142,6 @@ void updateTicketStatus(struct Ticket tickets[],int option, char agentName[], ch
 					//leave a message
 					if (character == 'y' || character == 'Y')
 					{
-						/*if (accountType == 'A')
-						{
-							getMessage(tickets, agentName, accountType);
-						}
-						else
-						{
-							getMessage(tickets, agentName, accountType);
-						}*/
 						getMessage(tickets, agentName, accountType);
 					}
 				}
@@ -185,6 +162,7 @@ void updateTicketStatus(struct Ticket tickets[],int option, char agentName[], ch
 			//open the ticket
 			if (character == 'y' || character == 'Y')
 			{
+				//active status
 				tickets->status = 1;
 				puts("*** Ticket re-opened! ***\n");
 			}
@@ -196,6 +174,7 @@ void updateTicketStatus(struct Ticket tickets[],int option, char agentName[], ch
 	}
 }
 
+//assign the values to the ticket array from the file
 int loadTickets(struct Ticket tickets[], int arraySize)
 {
 	int i, count = 0, fieldCount = 0;
@@ -204,22 +183,18 @@ int loadTickets(struct Ticket tickets[], int arraySize)
 
 	if (fp != NULL)
 	{
-		//for loop
+		//looping over the file
 		do
 		{
+			//get main ticket details
 			fieldCount = fscanf(fp, "%d|%d|%d|%30[^|]|%d",
 				&tickets[count].TicketNum,
 				&tickets[count].accountNum,
 				&tickets[count].status,
 				tickets[count].subject,
 				&tickets[count].messageCount);
-			/*printf("\n%d | %d | %d | %s | %d\n",
-				tickets[count].TicketNum,
-				tickets[count].accountNum,
-				tickets[count].status,
-				tickets[count].subject,
-				tickets[count].messageCount);*/
 
+			//correctly took input from file and space available for messages
 			if (fieldCount == 5 && tickets[count].messageCount > 0)
 			{
 				for (i = 0; i < tickets[count].messageCount; i++)
@@ -228,26 +203,24 @@ int loadTickets(struct Ticket tickets[], int arraySize)
 						&tickets[count].message[i].accountType,
 						tickets[count].message[i].displayName,
 						tickets[count].message[i].messageDisplay);
-					/*printf("|%c|%s|%s\n",
-						tickets[count].message[i].accountType,
-						tickets[count].message[i].displayName,
-						tickets[count].message[i].messageDisplay);*/
 				}
+				//count tickets
 				count++;
 			}
 			fgetc(fp); //remove newline
+
 		} while (!feof(fp) && count < arraySize);
 
+		//close file
 		fflush(fp);
 		fclose(fp);
 		fp = NULL;
-
 	}
 
 	return count;
 }
 
-
+//update the tickets file
 int updateTicketFile(struct Ticket tickets[], int arraySize)
 {
 	int i, j, count = 0;
@@ -256,8 +229,10 @@ int updateTicketFile(struct Ticket tickets[], int arraySize)
 
 	if (fp != NULL)
 	{
+		//looping through ticket array
 		for (i = 0; i < arraySize; i++)
 		{
+			//valid ticket
 			if (tickets[i].TicketNum > 0)
 			{
 
@@ -276,10 +251,12 @@ int updateTicketFile(struct Ticket tickets[], int arraySize)
 						tickets[i].message[j].displayName,
 						tickets[i].message[j].messageDisplay);
 				}
-				fputc('\n', fp);//remove newline
+				fputc('\n', fp);//add newline
+				//count tickets
 				count++;
 			}
 		}
+		//close file
 		fflush(fp);
 		fclose(fp);
 		fp = NULL;
@@ -287,7 +264,7 @@ int updateTicketFile(struct Ticket tickets[], int arraySize)
 	return count;
 }
 
-
+//write archive tickets to archive file
 int writeArchiveTickets(struct Ticket tickets[], int arraySize)
 {
 	int i, j, count = 0;
@@ -301,7 +278,6 @@ int writeArchiveTickets(struct Ticket tickets[], int arraySize)
 			//closed and valid tickets
 			if (tickets[i].status == 0 && tickets[i].TicketNum > 0)
 			{
-
 				fprintf(fp, "%d|%d|%d|%s|%d|",
 					tickets[i].TicketNum,
 					tickets[i].accountNum,
@@ -320,9 +296,11 @@ int writeArchiveTickets(struct Ticket tickets[], int arraySize)
 				//ticket to safe empty state
 				tickets[i].TicketNum = 0;
 				fputc('\n', fp); //add a newline
+				//count tickets
 				count++;
 			}
 		}
+		//close file
 		fflush(fp);
 		fclose(fp);
 		fp = NULL;
@@ -330,6 +308,7 @@ int writeArchiveTickets(struct Ticket tickets[], int arraySize)
 	return count;
 }
 
+//read archived tickets from archive file
 int readArchiveTickets(void)
 {
 	int ticketCount = 0, msgCount = 0, i, count = 0;
@@ -351,7 +330,7 @@ int readArchiveTickets(void)
 				tmp.subject,
 				&tmp.messageCount);
 
-			//count tickets and messages
+			//count tickets and messages upon valid input from file
 			if (count == 5)
 			{
 				ticketCount++;
@@ -373,12 +352,15 @@ int readArchiveTickets(void)
 
 		} while (!feof(fp)); //end of file
 
+		//close file
 		fflush(fp);
 		fclose(fp);
 		fp = NULL;
 	}
+
 	//display tickets and message
-	printf("There are %d ticket(s) and a total of %d message(s) archived.\n\n", ticketCount, msgCount);
+	printf("There are %d ticket(s) and a total of %d message(s) archived.\n\n",
+		ticketCount, msgCount);
 
 	return ticketCount;
 }

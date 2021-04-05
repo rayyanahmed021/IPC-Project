@@ -48,18 +48,22 @@ void getNewTicket(struct Ticket tickets[], int accountNum, char displayName[]);
 //take input of message and update the details
 void getMessage(struct Ticket tickets[], char accountName[], char accountType);
 
+//all closed tickets for a removed account is archived while the active tickets are reset to safe empty state
 void removeTickets(struct Ticket tickets[], int arraySize, int accountNum);
-
 
 //close or reopen tickets
 void updateTicketStatus(struct Ticket tickets[], int option,  char agentName[], char accountType);
 
+//assign the values to the ticket array from the file
 int loadTickets(struct Ticket tickets[], int arraySize);
 
+//update the tickets file
 int updateTicketFile(struct Ticket tickets[], int arraySize);
 
+//write archive tickets to archive file
 int writeArchiveTickets(struct Ticket tickets[], int arraySize);
 
+//read archived tickets from archive file
 int readArchiveTickets(void);
 
 

@@ -244,7 +244,7 @@ void updateDemographic(struct Demographic* demo)
 	} while (selection);
 }
 
-//load accounts opens a file to read from accounts.txyt and ticketts.txt
+//reads the file and assigns the values to the account array
 int loadAccounts(struct Account accounts[], int arraySize)
 {
 	int i;
@@ -253,7 +253,7 @@ int loadAccounts(struct Account accounts[], int arraySize)
 
 	if (fp != NULL)
 	{
-		//for loop
+		//looping over account array
 		for (i = 0; i < arraySize; i++)
 		{
 			fscanf(fp, "%d~%c~%30[^~]~%10[^~]~%8[^~]~%d~%lf~%30[^\n]",
@@ -266,6 +266,7 @@ int loadAccounts(struct Account accounts[], int arraySize)
 				&accounts[i].demographic.income,
 				accounts[i].demographic.country);
 		}
+		//close file
 		fflush(fp);
 		fclose(fp);
 		fp = NULL;
@@ -273,28 +274,7 @@ int loadAccounts(struct Account accounts[], int arraySize)
 	return arraySize;
 }
 
-void writeRemovedAccounts(struct Account accounts[])
-{
-	FILE* fp = fopen(ARCHIVE_ACC_FILE, "a");
-	if (fp != NULL)
-	{
-		//fprintf(fp, "%d~%c~%30[^~]~%10[^~]~%8[^~]~%d~%lf~%30[^\n]",
-		fprintf(fp, "%d~%c~%s~%s~%s~%d~%lf~%s\n",
-			accounts->accountNumber,
-			accounts->accountType,
-			accounts->login.accountName,
-			accounts->login.loginName,
-			accounts->login.password,
-			accounts->demographic.birth_year,
-			accounts->demographic.income,
-			accounts->demographic.country);
-		accounts->accountNumber = 0;
-		fflush(fp);
-		fclose(fp);
-		fp = NULL;
-	}
-}
-
+//read archive accounts from the file
 int readArchiveAccount(void)
 {
 	int count = 0;
@@ -304,6 +284,7 @@ int readArchiveAccount(void)
 
 	if (fp != NULL)
 	{
+		//get account information
 		while (fscanf(fp, "%d~%c~%30[^~]~%10[^~]~%8[^~]~%d~%lf~%30[^\n]",
 			&tmp.accountNumber,
 			&tmp.accountType,
@@ -316,24 +297,36 @@ int readArchiveAccount(void)
 		{
 			count++;
 		}
+		//close file
 		fflush(fp);
 		fclose(fp);
 		fp = NULL;
-
 	}
 	return count;
 }
 
-int updateAccountFile(struct Account accounts[], int arraySize)
+//write accounts to the file
+int writeAccounts(struct Account accounts[], int arraySize)
 {
 	int i, count = 0;
+	FILE* fp = NULL;
 
-	FILE* fp = fopen(TICKET_FILE, "w");
+	//write removed accounts which are archived
+	if (arraySize == 1)
+	{
+		fp = fopen(ARCHIVE_ACC_FILE, "a");
+	}
+	//update account file
+	else
+	{
+		fp = fopen(ACCOUNT_FILE, "w");
+	}
 
 	if (fp != NULL)
 	{
 		for (i = 0; i < arraySize; i++)
 		{
+			//valid account number
 			if (accounts[i].accountNumber > 0)
 			{
 
@@ -346,11 +339,11 @@ int updateAccountFile(struct Account accounts[], int arraySize)
 					accounts[i].demographic.birth_year,
 					accounts[i].demographic.income,
 					accounts[i].demographic.country);
-
-				fputc('\n', fp);//remove newline
+				//count account written
 				count++;
 			}
 		}
+		//close file
 		fflush(fp);
 		fclose(fp);
 		fp = NULL;

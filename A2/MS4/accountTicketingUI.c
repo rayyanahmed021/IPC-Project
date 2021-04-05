@@ -393,7 +393,7 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 			putchar('\n');
 			puts("Saving session modifications...");
 			printf("   %d account saved.\n",
-				updateAccountFile(accountTicket->accounts, accountTicket->ACCOUNT_MAX_SIZE));
+				writeAccounts(accountTicket->accounts, accountTicket->ACCOUNT_MAX_SIZE));
 			printf("   %d tickets saved.\n",
 				updateTicketFile(accountTicket->tickets, accountTicket->TICKET_MAX_SIZE));
 			puts("### LOGGED OUT ###\n");
@@ -403,7 +403,8 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		{
 			//No input
 			putchar('\n');
-			matchIndex = findAccountIndexByAcctNum(0, accountTicket->accounts, accountTicket->ACCOUNT_MAX_SIZE, 0);
+			matchIndex = findAccountIndexByAcctNum(0, accountTicket->accounts,
+													accountTicket->ACCOUNT_MAX_SIZE, 0);
 
 			//condition for matching
 			if (matchIndex != -1)
@@ -470,16 +471,13 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 				//condition for removing
 				if (exitOption == 'y' || exitOption == 'Y')
 				{
-					/*updateTicketStatus(accountTicket->tickets,
-						accountTicket->accounts[matchIndex].accountNumber,
-						accountTicket->TICKET_MAX_SIZE, 0,
-						name, 'A');*/
-					removeTickets(accountTicket->tickets, accountTicket->TICKET_MAX_SIZE, accountTicket->accounts[matchIndex].accountNumber);
-
-					writeRemovedAccounts(&accountTicket->accounts[matchIndex]);
-
+					removeTickets(accountTicket->tickets, accountTicket->TICKET_MAX_SIZE,
+						accountTicket->accounts[matchIndex].accountNumber);
+					writeAccounts(&accountTicket->accounts[matchIndex], 1);
+					
+					//update account number
+					accountTicket->accounts[matchIndex].accountNumber = 0;
 					puts("*** Account Removed! ***");
-
 				}
 				else
 				{
@@ -534,9 +532,9 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 		{
 			putchar('\n');
 			matchIndex = findTicketIndexByTickNum(0, "ticket number",
-				accountTicket->tickets,
-				accountTicket->TICKET_MAX_SIZE, 1);
-
+													accountTicket->tickets,
+													accountTicket->TICKET_MAX_SIZE, 1);
+			//matching ticket number
 			if (matchIndex != -1)
 			{
 				menuUpdateTcktAgent(&accountTicket->tickets[matchIndex], name);
@@ -555,7 +553,8 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 			putchar('\n');
 			if (exitOption == 'y' || exitOption == 'Y')
 			{
-				printf("*** %d tickets archived ***\n\n", writeArchiveTickets(accountTicket->tickets, accountTicket->TICKET_MAX_SIZE));
+				printf("*** %d tickets archived ***\n\n", 
+					writeArchiveTickets(accountTicket->tickets, accountTicket->TICKET_MAX_SIZE));
 			}
 			pauseExecution();
 		}
@@ -617,11 +616,9 @@ void menuUpdateTcktAgent(struct Ticket tickets[], char agentName[])
 			}
 			break;
 		case 2:
-			//updateTicketStatus(tickets, 0, arraySize, 2, agentName, 'A');
 			updateTicketStatus(tickets, 2, agentName, 'A');
 			break;
 		case 3:
-			//updateTicketStatus(tickets, 0, arraySize, 3, agentName, 'A');
 			updateTicketStatus(tickets, 3, agentName, 'A');
 			break;
 		default:

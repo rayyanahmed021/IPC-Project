@@ -1076,7 +1076,7 @@ Selection: 6
 Ticket Acct# Display Name    Status Subject                        Messages
 ------ ----- --------------- ------ ------------------------------ --------
 080599 20020 Shrimpy Shrimp  ACTIVE No power/does not turn on          1
-040599 30049 Buck Odom       ACTIVE Power Issue                        1
+040599 35049 Buck Odom       ACTIVE Power Issue                        1
 ------ ----- --------------- ------ ------------------------------ --------
 
 Enter the ticket number to view the messages or
@@ -1094,7 +1094,7 @@ CUSTOMER (Shrimpy Shrimp):
 Ticket Acct# Display Name    Status Subject                        Messages
 ------ ----- --------------- ------ ------------------------------ --------
 080599 20020 Shrimpy Shrimp  ACTIVE No power/does not turn on          1
-040599 30049 Buck Odom       ACTIVE Power Issue                        1
+040599 35049 Buck Odom       ACTIVE Power Issue                        1
 ------ ----- --------------- ------ ------------------------------ --------
 
 Enter the ticket number to view the messages or
@@ -1131,10 +1131,10 @@ Ticket Acct# Display Name    Status Subject                        Messages
 070533 30004 Betty Boop      ACTIVE Nothing happens...                20
 080020 30004 Betty Boop      ACTIVE Double broken!                    20
 080204 30001 Silly Sally     ACTIVE It's very messy!                   2
-040599 30049 Buck Odom       ACTIVE Power Issue                        1
+040599 35049 Buck Odom       ACTIVE Power Issue                        1
 040001 30021 Kane Lancaster  ACTIVE Connectivity Problem               5
 040530 30021 Kane Lancaster  ACTIVE Not doing what it's told...       20
-040004 30049 Buck Odom       ACTIVE Causes bodily harm!                3
+040004 35049 Buck Odom       ACTIVE Causes bodily harm!                3
 040533 30021 Kane Lancaster  ACTIVE Doesn't respond...                20
 040020 30021 Kane Lancaster  ACTIVE Damaged and in pieces             19
 040204 53070 Wylie Pollard   ACTIVE It's very messy!                   2
@@ -1222,10 +1222,10 @@ Ticket Acct# Display Name    Status Subject                        Messages
 070533 30004 Betty Boop      ACTIVE Nothing happens...                20
 080020 30004 Betty Boop      ACTIVE Double broken!                    20
 080204 30001 Silly Sally     ACTIVE It's very messy!                   2
-040599 30049 Buck Odom       ACTIVE Power Issue                        1
+040599 35049 Buck Odom       ACTIVE Power Issue                        1
 040001 30021 Kane Lancaster  ACTIVE Connectivity Problem               5
 040530 30021 Kane Lancaster  ACTIVE Not doing what it's told...       20
-040004 30049 Buck Odom       ACTIVE Causes bodily harm!                3
+040004 35049 Buck Odom       ACTIVE Causes bodily harm!                3
 040533 30021 Kane Lancaster  ACTIVE Doesn't respond...                20
 040020 30021 Kane Lancaster  ACTIVE Damaged and in pieces             19
 040204 53070 Wylie Pollard   ACTIVE It's very messy!                   2
@@ -1263,7 +1263,7 @@ Ticket Acct# Display Name    Status Subject                        Messages
 060001 30004 Betty Boop      CLOSED Frequent Disconnects               5
 064611 20020 Shrimpy Shrimp  CLOSED It gets hot and smokes             4
 030530 30004 Betty Boop      CLOSED Does not respond to command...    20
-044611 30049 Buck Odom       CLOSED Unit is burning up                 4
+044611 35049 Buck Odom       CLOSED Unit is burning up                 4
 080600 30004 Betty Boop      CLOSED Funny Noise!                       2
 ------ ----- --------------- ------ ------------------------------ --------
 
@@ -1293,7 +1293,7 @@ Ticket Acct# Display Name    Status Subject                        Messages
 060001 30004 Betty Boop      CLOSED Frequent Disconnects               5
 064611 20020 Shrimpy Shrimp  CLOSED It gets hot and smokes             4
 030530 30004 Betty Boop      CLOSED Does not respond to command...    20
-044611 30049 Buck Odom       CLOSED Unit is burning up                 4
+044611 35049 Buck Odom       CLOSED Unit is burning up                 4
 080600 30004 Betty Boop      CLOSED Funny Noise!                       2
 ------ ----- --------------- ------ ------------------------------ --------
 
@@ -1447,10 +1447,10 @@ Ticket Acct# Display Name    Status Subject                        Messages
 070533 30004 Betty Boop      ACTIVE Nothing happens...                20
 080020 30004 Betty Boop      ACTIVE Double broken!                    20
 080204 30001 Silly Sally     ACTIVE It's very messy!                   2
-040599 30049 Buck Odom       ACTIVE Power Issue                        1
+040599 35049 Buck Odom       ACTIVE Power Issue                        1
 040001 30021 Kane Lancaster  ACTIVE Connectivity Problem               5
 040530 30021 Kane Lancaster  ACTIVE Not doing what it's told...       20
-040004 30049 Buck Odom       ACTIVE Causes bodily harm!                3
+040004 35049 Buck Odom       ACTIVE Causes bodily harm!                3
 040533 30021 Kane Lancaster  ACTIVE Doesn't respond...                20
 040020 30021 Kane Lancaster  ACTIVE Damaged and in pieces             19
 040204 53070 Wylie Pollard   ACTIVE It's very messy!                   2
@@ -1487,7 +1487,7 @@ Ticket Acct# Display Name    Status Subject                        Messages
 ------ ----- --------------- ------ ------------------------------ --------
 060001 30004 Betty Boop      CLOSED Frequent Disconnects               5
 030530 30004 Betty Boop      CLOSED Does not respond to command...    20
-044611 30049 Buck Odom       CLOSED Unit is burning up                 4
+044611 35049 Buck Odom       CLOSED Unit is burning up                 4
 080600 30004 Betty Boop      CLOSED Funny Noise!                       2
 ------ ----- --------------- ------ ------------------------------ --------
 
@@ -1695,7 +1695,7 @@ Ticket Acct# Display Name    Status Subject                        Messages
 ------ ----- --------------- ------ ------------------------------ --------
 060001 30004 Betty Boop      CLOSED Frequent Disconnects               5
 030530 30004 Betty Boop      CLOSED Does not respond to command...    20
-044611 30049 Buck Odom       CLOSED Unit is burning up                 4
+044611 35049 Buck Odom       CLOSED Unit is burning up                 4
 080600 30004 Betty Boop      CLOSED Funny Noise!                       2
 ------ ----- --------------- ------ ------------------------------ --------
 
@@ -1827,7 +1827,7 @@ Ticket Acct# Display Name    Status Subject                        Messages
 ------ ----- --------------- ------ ------------------------------ --------
 060001 30004 Betty Boop      CLOSED Frequent Disconnects               5
 030530 30004 Betty Boop      CLOSED Does not respond to command...    20
-044611 30049 Buck Odom       CLOSED Unit is burning up                 4
+044611 35049 Buck Odom       CLOSED Unit is burning up                 4
 080600 30004 Betty Boop      CLOSED Funny Noise!                       4
 ------ ----- --------------- ------ ------------------------------ --------
 
@@ -1856,7 +1856,7 @@ Ticket Acct# Display Name    Status Subject                        Messages
 ------ ----- --------------- ------ ------------------------------ --------
 060001 30004 Betty Boop      CLOSED Frequent Disconnects               5
 030530 30004 Betty Boop      CLOSED Does not respond to command...    20
-044611 30049 Buck Odom       CLOSED Unit is burning up                 4
+044611 35049 Buck Odom       CLOSED Unit is burning up                 4
 080600 30004 Betty Boop      CLOSED Funny Noise!                       4
 ------ ----- --------------- ------ ------------------------------ --------
 
@@ -2190,10 +2190,10 @@ Ticket Acct# Display Name    Status Subject                        Messages
 ------ ----- --------------- ------ ------------------------------ --------
 060001 30004 Betty Boop      ACTIVE Frequent Disconnects               5
 070533 30004 Betty Boop      ACTIVE Nothing happens...                20
-040599 30049 Buck Odom       ACTIVE Power Issue                        1
+040599 35049 Buck Odom       ACTIVE Power Issue                        1
 040001 30021 Kane Lancaster  ACTIVE Connectivity Problem               5
 040530 30021 Kane Lancaster  ACTIVE Not doing what it's told...       20
-040004 30049 Buck Odom       ACTIVE Causes bodily harm!                3
+040004 35049 Buck Odom       ACTIVE Causes bodily harm!                3
 040533 30021 Kane Lancaster  ACTIVE Doesn't respond...                20
 040020 30021 Kane Lancaster  ACTIVE Damaged and in pieces             19
 040204 53070 Wylie Pollard   ACTIVE It's very messy!                   2
@@ -2227,10 +2227,10 @@ Ticket Acct# Display Name    Status Subject                        Messages
 ------ ----- --------------- ------ ------------------------------ --------
 060001 30004 Betty Boop      ACTIVE Frequent Disconnects               5
 070533 30004 Betty Boop      ACTIVE Nothing happens...                20
-040599 30049 Buck Odom       ACTIVE Power Issue                        1
+040599 35049 Buck Odom       ACTIVE Power Issue                        1
 040001 30021 Kane Lancaster  ACTIVE Connectivity Problem               5
 040530 30021 Kane Lancaster  ACTIVE Not doing what it's told...       20
-040004 30049 Buck Odom       ACTIVE Causes bodily harm!                3
+040004 35049 Buck Odom       ACTIVE Causes bodily harm!                3
 040533 30021 Kane Lancaster  ACTIVE Doesn't respond...                20
 040020 30021 Kane Lancaster  ACTIVE Damaged and in pieces             19
 040204 53070 Wylie Pollard   ACTIVE It's very messy!                   2
@@ -2753,7 +2753,7 @@ Selection: 0
 
 Saving session modifications...
    4 account saved.
-   7 tickets saved.
+   5 tickets saved.
 ### LOGGED OUT ###
 
 ==============================================

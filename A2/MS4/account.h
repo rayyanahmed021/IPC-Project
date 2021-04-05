@@ -69,14 +69,14 @@ void updateUserLogin(struct UserLogin* login);
 //display update menu options for demographic and returns the updated values via pointer
 void updateDemographic(struct Demographic* demo);
 
+//reads the file and assigns the values to the account array
 int loadAccounts(struct Account accounts[], int arraySize);
 
-void writeRemovedAccounts(struct Account accounts[]);
-
+//read archive accounts from the file
 int readArchiveAccount(void);
 
-int updateAccountFile(struct Account accounts[], int arraySize);
-
+//write accounts to the file
+int writeAccounts(struct Account accounts[], int arraySize);
 #endif // !ACCOUNT_H_
 
 
