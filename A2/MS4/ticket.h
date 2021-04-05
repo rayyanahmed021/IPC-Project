@@ -48,8 +48,11 @@ void getNewTicket(struct Ticket tickets[], int accountNum, char displayName[]);
 //take input of message and update the details
 void getMessage(struct Ticket tickets[], char accountName[], char accountType);
 
+void removeTickets(struct Ticket tickets[], int arraySize, int accountNum);
+
+
 //close or reopen tickets
-void updateTicketStatus(struct Ticket tickets[], int accountNum, int arraySize, int option,  char agentName[], char accountType);
+void updateTicketStatus(struct Ticket tickets[], int option,  char agentName[], char accountType);
 
 int loadTickets(struct Ticket tickets[], int arraySize);
 

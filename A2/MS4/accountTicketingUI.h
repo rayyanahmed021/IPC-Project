@@ -77,7 +77,7 @@ int menuLogin(const struct Account account[], int arraySize);
 void menuAgent(struct AccountTicketingData* accountTicket, const struct Account* loginUser);
 
 //display menu for agents for updating tickets
-void menuUpdateTcktAgent(struct Ticket tickets[],  char agentName[], int arraySize);
+void menuUpdateTcktAgent(struct Ticket tickets[],  char agentName[]);
 
 //Display Customer menu
 void menuCustomer(struct Account* account, struct Ticket* tickets, int ticketArraySize);

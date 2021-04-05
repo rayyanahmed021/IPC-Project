@@ -470,10 +470,11 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 				//condition for removing
 				if (exitOption == 'y' || exitOption == 'Y')
 				{
-					updateTicketStatus(accountTicket->tickets,
+					/*updateTicketStatus(accountTicket->tickets,
 						accountTicket->accounts[matchIndex].accountNumber,
 						accountTicket->TICKET_MAX_SIZE, 0,
-						name, 'A');
+						name, 'A');*/
+					removeTickets(accountTicket->tickets, accountTicket->TICKET_MAX_SIZE, accountTicket->accounts[matchIndex].accountNumber);
 
 					writeRemovedAccounts(&accountTicket->accounts[matchIndex]);
 
@@ -538,8 +539,7 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 
 			if (matchIndex != -1)
 			{
-				menuUpdateTcktAgent(&accountTicket->tickets[matchIndex], name,
-					accountTicket->TICKET_MAX_SIZE);
+				menuUpdateTcktAgent(&accountTicket->tickets[matchIndex], name);
 			}
 			else
 			{
@@ -579,7 +579,7 @@ void menuAgent(struct AccountTicketingData* accountTicket, const struct Account*
 }
 
 //display menu for agents for updating tickets
-void menuUpdateTcktAgent(struct Ticket tickets[], char agentName[], int arraySize)
+void menuUpdateTcktAgent(struct Ticket tickets[], char agentName[])
 {
 	int selection;
 	do
@@ -617,10 +617,12 @@ void menuUpdateTcktAgent(struct Ticket tickets[], char agentName[], int arraySiz
 			}
 			break;
 		case 2:
-			updateTicketStatus(tickets, 0, arraySize, 2, agentName, 'A');
+			//updateTicketStatus(tickets, 0, arraySize, 2, agentName, 'A');
+			updateTicketStatus(tickets, 2, agentName, 'A');
 			break;
 		case 3:
-			updateTicketStatus(tickets, 0, arraySize, 3, agentName, 'A');
+			//updateTicketStatus(tickets, 0, arraySize, 3, agentName, 'A');
+			updateTicketStatus(tickets, 3, agentName, 'A');
 			break;
 		default:
 			break;
@@ -795,7 +797,7 @@ void menuCustomerUpdateTckt(struct Ticket tickets[], char accountName[])
 			getMessage(tickets, accountName, 'C');
 			break;
 		case 3:
-			updateTicketStatus(tickets, 0, 0, 2, accountName, 'C');
+			updateTicketStatus(tickets, 2, accountName, 'C');
 			break;
 		default:
 			break;

@@ -86,15 +86,32 @@ void getMessage(struct Ticket tickets[], char accountName[], char accountType)
 	}
 }
 
-//close or reopen tickets 
-void updateTicketStatus(struct Ticket tickets[], int accountNum, int arraySize,
-	int option, char agentName[], char accountType)
+//accountNum,
+// array suize
+// 
+void removeTickets(struct Ticket tickets[], int arraySize, int accountNum)
 {
-	int i, count = 0;
+	int i;
+
+	for (i = 0; i < arraySize; i++)
+	{
+		if (tickets[i].accountNum == accountNum && tickets[i].status == 0)
+		{
+			writeArchiveTickets(&tickets[i], 1);
+		}
+		else if (tickets[i].accountNum == accountNum && tickets[i].status == 1)
+		{
+			tickets[i].TicketNum = 0;
+		}
+	}
+}
+//close or reopen tickets 
+void updateTicketStatus(struct Ticket tickets[],int option, char agentName[], char accountType)
+{
 	char character;
 
 	//removal of tickets related to a removed account
-	if (option == 0)
+	/*if (option == 0)
 	{
 		for (i = 0; i < arraySize; i++)
 		{
@@ -108,9 +125,9 @@ void updateTicketStatus(struct Ticket tickets[], int accountNum, int arraySize,
 				tickets[i].TicketNum = 0;
 			}
 		}
-	}
+	}*/
 	//close a ticket
-	else if (option == 2)
+	if (option == 2)
 	{
 
 		if (tickets->status == 0)
@@ -140,14 +157,15 @@ void updateTicketStatus(struct Ticket tickets[], int accountNum, int arraySize,
 					//leave a message
 					if (character == 'y' || character == 'Y')
 					{
-						if (accountType == 'A')
+						/*if (accountType == 'A')
 						{
 							getMessage(tickets, agentName, accountType);
 						}
 						else
 						{
 							getMessage(tickets, agentName, accountType);
-						}
+						}*/
+						getMessage(tickets, agentName, accountType);
 					}
 				}
 				puts("*** Ticket closed! ***\n");
